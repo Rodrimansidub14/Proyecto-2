@@ -1,0 +1,72 @@
+{
+  "name": "Graph DBMS 59ea5d38",
+  "description": "",
+  "tags": [
+    "neo4j-desktop-dbms-database-59ea5d38-1b97-4c1f-9cdd-83c653733ae9"
+  ],
+  "id": "29451ce5-011d-475f-8964-df26924c7f97",
+  "metadata": {
+    "neo4jDesktopDbmsDatabases": [
+      {
+        "name": "neo4j",
+        "type": "standard",
+        "aliases": [],
+        "access": "read-write",
+        "address": "localhost:7687",
+        "role": "primary",
+        "writer": true,
+        "requestedStatus": "online",
+        "currentStatus": "online",
+        "statusMessage": "",
+        "default": true,
+        "home": true,
+        "constituents": [],
+        "statistics": {
+          "nodes": 0,
+          "relationships": 0,
+          "labels": 0,
+          "relationshipTypes": 0,
+          "propertyKeys": 0
+        }
+      },
+      {
+        "name": "system",
+        "type": "system",
+        "aliases": [],
+        "access": "read-write",
+        "address": "localhost:7687",
+        "role": "primary",
+        "writer": true,
+        "requestedStatus": "online",
+        "currentStatus": "online",
+        "statusMessage": "",
+        "default": false,
+        "home": false,
+        "constituents": []
+      },
+      {
+        "name": "tutores",
+        "type": "standard",
+        "aliases": [],
+        "access": "read-write",
+        "address": "localhost:7687",
+        "role": "primary",
+        "writer": true,
+        "requestedStatus": "online",
+        "currentStatus": "online",
+        "statusMessage": "",
+        "default": false,
+        "home": false,
+        "constituents": [],
+        "statistics": {
+          "nodes": 0,
+          "relationships": 0,
+          "labels": 0,
+          "relationshipTypes": 0,
+          "propertyKeys": 0
+        }
+      }
+    ]
+  },
+  "isCustomPathInstallation": false
+}
