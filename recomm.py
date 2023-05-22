@@ -1,10 +1,12 @@
 from conexion import run_query
 
 # Knowledge-based recommendation function
+
+
 def recommend_knowledge_based(user_preferences):
 
     cypher_query = """
-    MATCH (tutor:Tutor)-[:TEACHES]->(subject:Subject)
+    MATCH (tutor:tutor)-[:TEACHES]->(subject:materia)
     WHERE subject.name IN {preferences}
     RETURN tutor as result
     UNION
@@ -14,6 +16,8 @@ def recommend_knowledge_based(user_preferences):
     """.format(preferences=user_preferences)
 
 # User-based collaborative filtering function
+
+
 def recommend_user_based(user_id):
     # Write a Cypher query to find similar users and what tutors/resources they like
     cypher_query = """
@@ -21,26 +25,30 @@ def recommend_user_based(user_id):
     WHERE user.id = {user_id} AND NOT (user)-[:LIKED]->(resource)
     RETURN resource
     """.format(user_id=user_id)
-    
+
     results = run_query(cypher_query)
     return results
 
 # Hybrid recommendation function
+
+
 def recommend(user_preferences, user_id):
     knowledge_based_results = recommend_knowledge_based(user_preferences)
     user_based_results = recommend_user_based(user_id)
-    
+
     # Here you'd combine the results from the two methods in a way that makes sense for your use case
     # This is just a simple example
     combined_results = list(set(knowledge_based_results + user_based_results))
-    
+
     return combined_results
+
+
 def main_menu():
     print("Bienvenido al portal de tutorias")
     print("1. Tutorias")
     print("2. Otro tipo")
     choice = input("elige una opción: ")
-    
+
     if choice == '1':
         tutor_menu()
     elif choice == '2':
@@ -49,27 +57,48 @@ def main_menu():
         print("Invalid option")
         main_menu()
 
+
 def tutor_menu():
-    print("Selecciona el tipo de tutorias")
+    print("Selecciona el tipo de tutorias:")
     print("1. Virtuales")
     print("2. Presenciales")
-    choice = input("elige una opción: ")
+    option = input("Ingrese su opción: ")
 
-    year = input("¿Que año cursas actualmente? : ")
-    semester = input("¿En que semestre te encuentras?: ")
-    course = input("Ingresa el curso en el que necesitas apoyo: ")
+    if option == "1":
+        courses = [
+            "Algoritmos y Programación Básica",
+            "Programación Orientada a Objetos",
+            "Programación de Microprocesadores",
+            "Bases de Datos I",
+            "Sistemas y Tecnologías Web"
+        ]
 
-    user_preferences = [type_of_tutoring, year, subject]
+        print("Cursos disponibles para tutorías virtuales:")
+        for i, course in enumerate(courses, start=1):
+            print(f"{i}. {course}")
 
-    # Now get the recommendations
-    recommendations = recommend_knowledge_based(user_preferences)
-    
-    # Print the recommendations
-    print("\nWe recommend the following tutors based on your preferences:")
-    for tutor in recommendations:
-        print(tutor)
-    
-    return
+        course_index = int(input("Seleccione el número del curso en el que necesita ayuda: ")) - 1
+        if course_index < 0 or course_index >= len(courses):
+            print("Opción inválida. Inténtelo nuevamente.")
+            tutor_menu()
+
+        selected_course = courses[course_index]
+
+        # Call the recommendation function based on the selected course
+        tutors = recommend_knowledge_based([selected_course])
+        print("Tutors recomendados:")
+        for tutor in tutors:
+            print(tutor)
+
+    elif option == "2":
+        # Add logic for in-person tutoring
+        pass
+
+    else:
+        print("Opción inválida. Inténtelo nuevamente.")
+
+    main_menu()
+
 
 def other_resources_menu():
     choice = input("Necesitas videos? (si/no): ")
