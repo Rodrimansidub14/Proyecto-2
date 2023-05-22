@@ -2,19 +2,16 @@ from conexion import run_query
 
 # Knowledge-based recommendation function
 def recommend_knowledge_based(user_preferences):
-    # Write a Cypher query to find tutors/resources based on user preferences
+
     cypher_query = """
     MATCH (tutor:Tutor)-[:TEACHES]->(subject:Subject)
     WHERE subject.name IN {preferences}
-    RETURN tutor
+    RETURN tutor as result
     UNION
     MATCH (resource:Resource)-[:ABOUT]->(subject:Subject)
     WHERE subject.name IN {preferences}
-    RETURN resource
+    RETURN resource as result
     """.format(preferences=user_preferences)
-    
-    results = run_query(cypher_query)
-    return results
 
 # User-based collaborative filtering function
 def recommend_user_based(user_id):
@@ -56,15 +53,23 @@ def tutor_menu():
     print("Selecciona el tipo de tutorias")
     print("1. Virtuales")
     print("2. Presenciales")
-    choice = input("Choose an option: ")
+    choice = input("elige una opción: ")
 
     year = input("¿Que año cursas actualmente? : ")
     semester = input("¿En que semestre te encuentras?: ")
     course = input("Ingresa el curso en el que necesitas apoyo: ")
 
-    from recomm import recommend_knowledge_based
-    tutors = recommend_knowledge_based([course])
-    print("Recommended tutors:", tutors)
+    user_preferences = [type_of_tutoring, year, subject]
+
+    # Now get the recommendations
+    recommendations = recommend_knowledge_based(user_preferences)
+    
+    # Print the recommendations
+    print("\nWe recommend the following tutors based on your preferences:")
+    for tutor in recommendations:
+        print(tutor)
+    
+    return
 
 def other_resources_menu():
     choice = input("Necesitas videos? (si/no): ")
