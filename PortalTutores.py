@@ -10,6 +10,8 @@ connector = Neo4jConnector(uri, user, password)
 connector.connect()
 
 def display_main_menu():
+        # Función principal que muestra el menú y maneja las opciones del usuario
+
     while True:
         print("########################################")
         print("########################################")
@@ -48,6 +50,9 @@ def display_main_menu():
 
     connector.close()
 
+    
+    
+# Función para agregar nueva información a la base de datos
 def add_info(connector):
     print("Agregar nueva información:")
     name = input("Nombre: ")
@@ -63,15 +68,20 @@ def add_info(connector):
     connector.create_node("Tutor", properties)
     print("Nueva información agregada exitosamente.")
 
+
+# Función para eliminar información de la base de datos
 def del_info(connector):
     node_id = input("ID del nodo a eliminar: ")
     connector.delete_node("Tutor", node_id)
     print("Información eliminada exitosamente.")
 
+
+    # Función para ejecutar el sistema de recomendación de tutorías
 def run_tutor_recommendation():
     recommendation_system = TutorRecommendationSystem(connector)
     recommendation_system.run_recommendation()
 
+    # Función para ejecutar el sistema de recomendación de recursos
 def run_resource_recommendation():
     recommendation_system = ResourceRecommendationSystem(connector)
     recommendation_system.run_recommendation()

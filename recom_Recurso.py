@@ -8,25 +8,28 @@ class ResourceRecommendationSystem:
         self.connector = connector
 
     def retrieve_node_attributes(self, label):
+        # Recupera los atributos de los nodos del tipo especificado
         query = f"MATCH (n:{label}) RETURN n.r AS Recurso, n.Materias AS Cursos"
         return self.connector.run_query(query)
 
     def preprocess_text(self, text):
+        # Realiza el preprocesamiento del texto
         if text is None:
             return ""
 
-        # Remove punctuation
+        # Elimina la puntuación
         text = text.translate(str.maketrans('', '', string.punctuation))
 
-        # Convert to lowercase
+        # Convierte a minúsculas
         text = text.lower()
 
-        # Remove leading/trailing white spaces
+        # Elimina espacios en blanco al inicio y al final
         text = text.strip()
 
         return text
 
     def preprocess_attributes(self, attributes):
+        # Realiza el preprocesamiento de los atributos
         processed_attributes = []
         for item in attributes:
             recurso = self.preprocess_text(item["Recurso"])
@@ -36,6 +39,8 @@ class ResourceRecommendationSystem:
         return processed_attributes
 
     def run_recommendation(self):
+        # Ejecuta el sistema de recomendación de recursos
+
         courses = [
             "Cálculo 1",
             "Interacción Humano-Computador",
@@ -64,6 +69,7 @@ class ResourceRecommendationSystem:
 
         selected_course = courses[course_index]
 
+        # Realiza las recomendaciones de recursos
         recommendations = self.recommend_items([], "Recurso", selected_course)
 
         print("Recursos recomendados:")
@@ -72,9 +78,15 @@ class ResourceRecommendationSystem:
             print(f"Recurso: {resource} - Curso: {selected_course}")
 
     def recommend_items(self, user_preferences, label, selected_course):
+        # Realiza las recomendaciones de recursos
+
+        # Recupera los atributos de los nodos del tipo especificado
         attributes = self.retrieve_node_attributes(label)
+
+        # Realiza el preprocesamiento de los atributos
         processed_attributes = self.preprocess_attributes(attributes)
 
+        # Filtra los recursos que corresponden al curso seleccionado
         matching_resources = [resource for resource in processed_attributes if selected_course in resource["Cursos"]]
 
         if matching_resources:
