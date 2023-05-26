@@ -1,22 +1,44 @@
 from neo4j import GraphDatabase
 
-uri = "neo4j+s://25a39f57.databases.neo4j.io"
-user = "neo4j"
-password = "NJ-2zgfqdrVnZ7RF_WK2-4ZjNgrWL6elIhXpuTbFrtg"
 
-# Crea una sesión para interactuar con la base de datos
-driver = GraphDatabase.driver(uri, auth=(user, password))
 
-# Define una función para ejecutar una consulta
-def run_query(query):
-    with driver.session() as session:
-        result = session.run(query)
-        return result.data()
+class Neo4jConnector:
+    def __init__(self, uri, user, password):
+        self.uri = uri
+        self.user = user
+        self.password = password
+        self.driver = None
 
-# Ejemplo de consulta
-query = "MATCH (n) RETURN n LIMIT 5"
-result = run_query(query)
-print(result)
+    def connect(self):
+        self.driver = GraphDatabase.driver(self.uri, auth=(self.user, self.password))
 
-# Cierra la conexión al finalizar
-driver.close()
+    def close(self):
+        if self.driver is not None:
+            self.driver.close()
+
+    def run_query(self, query, **kwargs):
+        with self.driver.session() as session:
+            result = session.run(query, **kwargs)
+            records = list(result)
+            return records
+    
+    
+    def create_node(self, label, properties):
+        properties_string = ", ".join([f"{k}: ${k}" for k in properties.keys()])
+        query = f"CREATE (n:{label} {{{properties_string}}})"
+        self.run_query(query, **properties)
+
+
+    def delete_node(self, label, node_id):
+        conditions = f"WHERE ID(n) = {node_id}"
+        query = f"MATCH (n:{label}) {conditions} DELETE n"
+        self.run_query(query)
+
+
+    def create_relationship(self, start_node, end_node, relationship_type, properties=None):
+        query = f"MATCH (a) WHERE ID(a) = {start_node} MATCH (b) WHERE ID(b) = {end_node} CREATE (a)-[:{relationship_type} {properties}]->(b)"
+        self.run_query(query)
+
+    def delete_relationship(self, start_node, end_node, relationship_type):
+        query = f"MATCH (a)-[r:{relationship_type}]->(b) WHERE ID(a) = {start_node} AND ID(b) = {end_node} DELETE r"
+        self.run_query(query)
