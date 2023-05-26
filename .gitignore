@@ -1,2 +1,4 @@
 
 *.pyc
+*.pyc
+__pycache__/conexion.cpython-310.pyc
