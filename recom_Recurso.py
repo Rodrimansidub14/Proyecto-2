@@ -9,7 +9,7 @@ class ResourceRecommendationSystem:
 
     def retrieve_node_attributes(self, label):
         # Recupera los atributos de los nodos del tipo especificado
-        query = f"MATCH (n:{label}) RETURN n.r AS Recurso, n.Materias AS Cursos"
+        query = f"MATCH (n:{label}) RETURN n.r AS Recurso, n.Materias AS Cursos" # ¿query = f"MATCH (n:{label}) RETURN n.Recurso AS Recurso, n.Cursos AS Cursos"?
         return self.connector.run_query(query)
 
     def preprocess_text(self, text):
