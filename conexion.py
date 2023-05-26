@@ -1,3 +1,7 @@
+### Proyecto 2 fase 2
+# rodrigo mansilla
+# ALGORITMOS Y ESTRUCTURAS DE DATOS
+
 from neo4j import GraphDatabase
 
 
