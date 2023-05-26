@@ -1,0 +1,267 @@
+{
+  "version": "0.12.0",
+  "graph": {
+    "nodes": [
+      {
+        "id": "n0",
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "caption": "Tutor"
+      },
+      {
+        "id": "n1",
+        "position": {
+          "x": 0,
+          "y": 300
+        },
+        "caption": "Materia"
+      },
+      {
+        "id": "n2",
+        "position": {
+          "x": 253.4305082189042,
+          "y": 139.46035535137145
+        },
+        "caption": "Recurso"
+      }
+    ],
+    "relationships": [
+      {
+        "id": "n0",
+        "type": "teaches",
+        "fromId": "n0",
+        "toId": "n1"
+      },
+      {
+        "id": "n1",
+        "type": "Ayuda",
+        "fromId": "n2",
+        "toId": "n1"
+      }
+    ]
+  },
+  "dataModel": {
+    "configurations": {
+      "idsToIgnore": []
+    },
+    "fileModel": {
+      "fileSchemas": {
+        "tutoresAM.csv": {
+          "expanded": true,
+          "fields": [
+            {
+              "name": "Nombre Completo",
+              "type": "string",
+              "sample": "Cristian Fernando Laynez Bachez",
+              "include": true
+            },
+            {
+              "name": "Especialidad",
+              "type": "string",
+              "sample": "Algoritmos y Programación Básica",
+              "include": true
+            }
+          ]
+        },
+        "materiasC8.csv": {
+          "expanded": true,
+          "fields": [
+            {
+              "name": "Materias",
+              "type": "string",
+              "sample": "Algoritmos y Programación Básica",
+              "include": true
+            }
+          ]
+        },
+        "recursos2C8.csv": {
+          "expanded": true,
+          "fields": [
+            {
+              "name": "Cursos",
+              "type": "string",
+              "sample": "Física 1",
+              "include": true
+            },
+            {
+              "name": "r",
+              "type": "string",
+              "sample": "Physics library | Science | Khan Academy",
+              "include": true
+            }
+          ]
+        }
+      }
+    },
+    "graphModel": {
+      "nodeSchemas": {
+        "n0": {
+          "label": "Tutor",
+          "additionLabels": [],
+          "labelProperties": [],
+          "properties": [
+            {
+              "property": "nombreTutor",
+              "type": "string",
+              "identifier": "2o1YwU58EabiAVwu4n0sc"
+            },
+            {
+              "property": "Especialidad",
+              "type": "string",
+              "identifier": "Dru8-m_NPn6z14CjdDTXT"
+            }
+          ],
+          "key": {
+            "properties": [
+              "2o1YwU58EabiAVwu4n0sc"
+            ]
+          }
+        },
+        "n1": {
+          "label": "Materia",
+          "additionLabels": [],
+          "labelProperties": [],
+          "properties": [
+            {
+              "property": "Materias",
+              "type": "string",
+              "identifier": "F4ZPpnRkhjkIkmKKPfYVK"
+            }
+          ],
+          "key": {
+            "properties": [
+              "F4ZPpnRkhjkIkmKKPfYVK"
+            ]
+          }
+        },
+        "n2": {
+          "label": "Recurso",
+          "additionLabels": [],
+          "labelProperties": [],
+          "properties": [
+            {
+              "property": "r",
+              "type": "string",
+              "identifier": "9GIfbiLRjZfs60NpI-_te"
+            },
+            {
+              "property": "Cursos",
+              "type": "string",
+              "identifier": "IQPgEPLfromzjx3-U0yL6"
+            }
+          ],
+          "key": {
+            "properties": [
+              "9GIfbiLRjZfs60NpI-_te"
+            ]
+          }
+        }
+      },
+      "relationshipSchemas": {
+        "n0": {
+          "type": "teaches",
+          "sourceNodeSchema": "n0",
+          "targetNodeSchema": "n1",
+          "properties": [
+            {
+              "property": "Nombre Completo",
+              "type": "string",
+              "identifier": "aam4mVsEbdfJneZqlkWm2"
+            }
+          ]
+        },
+        "n1": {
+          "type": "Ayuda",
+          "sourceNodeSchema": "n2",
+          "targetNodeSchema": "n1",
+          "properties": [
+            {
+              "property": "r",
+              "type": "string",
+              "identifier": "G_AMgTj_TJS8JeFB4113u"
+            }
+          ]
+        }
+      }
+    },
+    "mappingModel": {
+      "nodeMappings": {
+        "n0": {
+          "nodeSchema": "n0",
+          "fileSchema": "tutoresAM.csv",
+          "mappings": [
+            {
+              "field": "Nombre Completo"
+            },
+            {
+              "field": "Especialidad"
+            }
+          ]
+        },
+        "n1": {
+          "nodeSchema": "n1",
+          "fileSchema": "materiasC8.csv",
+          "mappings": [
+            {
+              "field": "Materias"
+            }
+          ]
+        },
+        "n2": {
+          "nodeSchema": "n2",
+          "fileSchema": "recursos2C8.csv",
+          "mappings": [
+            {
+              "field": "r"
+            },
+            {
+              "field": "Cursos"
+            }
+          ]
+        }
+      },
+      "relationshipMappings": {
+        "n0": {
+          "relationshipSchema": "n0",
+          "mappings": [
+            {
+              "field": "Especialidad"
+            }
+          ],
+          "sourceMappings": [
+            {
+              "field": "Nombre Completo"
+            }
+          ],
+          "targetMappings": [
+            {
+              "field": "Especialidad"
+            }
+          ],
+          "fileSchema": "tutoresAM.csv"
+        },
+        "n1": {
+          "relationshipSchema": "n1",
+          "mappings": [
+            {
+              "field": "Cursos"
+            }
+          ],
+          "sourceMappings": [
+            {
+              "field": "r"
+            }
+          ],
+          "targetMappings": [
+            {
+              "field": "Cursos"
+            }
+          ],
+          "fileSchema": "recursos2C8.csv"
+        }
+      }
+    }
+  }
+}
